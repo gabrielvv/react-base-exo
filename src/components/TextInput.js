@@ -19,51 +19,34 @@
  *    />
  * </div>
  *
- * Le message d'erreur ne s'affiche que s'il y a une erreur et que si la valeur a été mise à jour
+ * Le message d'erreur ne s'affiche que s'il y a une erreur
  */
 
 import React from 'react'
 import PropTypes from 'prop-types'
 import '../styles/form.css'
 
-class TextInput extends React.Component {
+function TextInput(props) {
+  const {
+    name, label, onChange, value, error, className,
+  } = props
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      valueUpdated: !!props.value
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.value !== this.props.value) {
-      this.setState({ valueUpdated: true })
-    }
-  }
-
-  render() {
-    const { valueUpdated } = this.state
-    const {
-      name, label, onChange, value, error, className,
-    } = this.props
-
-    return (
-      <div>
-        <label htmlFor={name} className="FormLabel">
-          {label}
-          {error && valueUpdated && <span className="ErrorMessage">{error}</span>}
-        </label>
-        <input
-          id={name}
-          type="text"
-          name={name}
-          className={className}
-          onChange={onChange}
-          value={value}
-        />
-      </div>
-    )
-  }
+  return (
+    <div>
+      <label htmlFor={name} className="FormLabel">
+        {label}
+        {error && <span className="ErrorMessage">{error}</span>}
+      </label>
+      <input
+        id={name}
+        type="text"
+        name={name}
+        className={className}
+        onChange={onChange}
+        value={value}
+      />
+    </div>
+  )
 }
 
 TextInput.propTypes = {

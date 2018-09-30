@@ -6,14 +6,17 @@
  *
  * Retourne un objet errors de type :
  * {
- *    name: ' : ne doit pas être vide'
- *    price: ' : doit être en chiffres'
- *    price: ' : ne doit pas être vide'
+ *    isInError: boolean,
+ *    errors: {
+ *      name: ' : ne doit pas être vide'
+ *      price: ' : doit être en chiffres'
+ *      (ou) price: ' : ne doit pas être vide'
+ *   }
  * }
  * S'il n'y a pas d'erreur ne pas retourner la clé name ou price
  */
 
-export default function isPhoneError(phone) {
+export default function getPhoneErrors(phone) {
   const errors = {}
 
   if (phone.name.length === 0) {
@@ -28,5 +31,8 @@ export default function isPhoneError(phone) {
     errors.price = ' : ne doit pas être vide'
   }
 
-  return errors
+  return {
+    isInError: !!Object.keys(errors).length,
+    errors
+  }
 }

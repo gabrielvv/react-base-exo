@@ -24,11 +24,11 @@
  * - Utiliser le composant TextInput pour les champs de formulaire
  * - Récupérer le phone avec getPhonebyId au chargement s'il un id est fourni en url, sinon champs vides
  * - Si le phone n'a pas d'id (en création) ne pas afficher #0 dans le FormTitle
- * - Gestion des erreurs fait appel à la fonction services/isPhoneError.js
  * - Créer une méthode pour chaque onChange de champs
- * - Ajouter le phone si saisie valide avec savePhone de l'api
- * - Le bouton est disabled si le form n'est pas valide
- * - Quand le form est validé, rediriger vers la page d'accueil
+ *
+ * - Gérer les erreurs à la soumission du formulaire
+ * - Gestion des erreurs fait appel à la fonction services/isPhoneError.js
+ * - Quand le form est validé, le phone est sauvé, rediriger vers la page d'accueil
  */
 
 import React from 'react'
@@ -41,16 +41,15 @@ import TextInput from '../components/TextInput'
 import '../styles/form.css'
 
 const defaultState = {
-  phone: { name: '', price: '', id: null },
+  phone: { name: '', price: '', id: '' },
   shouldRedirect: false,
-  isInError: null,
   errors: {},
 }
 
 class ManagePhonePage extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { ...defaultState, isInError: !props.id }
+    this.state = { ...defaultState }
   }
 
   componentDidMount() {
@@ -66,47 +65,48 @@ class ManagePhonePage extends React.Component {
   getPhone() {
     const phoneId = this.props.match.params.id
     if (!phoneId) {
-      this.setState({ ...defaultState, isInError: true })
+      this.setState({ ...defaultState })
       return
     }
 
     PhoneApi.getPhoneById(phoneId).then(phone => {
-      this.setState({ phone, isInError: false })
+      this.setState({ phone })
     })
   }
 
   setPhoneNameState(event) {
     const { value } = event.target
     const { phone } = this.state
-    this.setState({ phone: { ...phone, name: value } }, () => this.checkFormError())
+    this.setState({ phone: { ...phone, name: value } })
   }
 
   setPhonePriceState(event) {
     const { value } = event.target
     const { phone } = this.state
-    this.setState({ phone: { ...phone, price: value } }, () => this.checkFormError())
+    this.setState({ phone: { ...phone, price: value } })
   }
 
-  checkFormError() {
-    const { phone } = this.state
-    const errors = isPhoneError(phone)
-    this.setState({
-      errors,
-      isInError: !!Object.keys(errors).length
-    })
-  }
-
-  savePhone(event) {
+  submitPhone(event) {
     event.preventDefault()
-
     const { phone } = this.state
+    const { isInError, errors } = isPhoneError(phone)
+
+    if (isInError) {
+      this.setState({ errors })
+      return
+    }
+
+    this.savePhone(phone)
+  }
+
+  savePhone(phone) {
     PhoneApi.savePhone(phone).then(() => {
       this.setState({ shouldRedirect: true })
     })
   }
 
   render() {
-    const { shouldRedirect, phone, errors, isInError } = this.state
+    const { shouldRedirect, phone, errors } = this.state
 
     const nameField = {
       name: 'name',
@@ -144,8 +144,7 @@ class ManagePhonePage extends React.Component {
 
           <button
             className="Button"
-            onClick={e => this.savePhone(e)}
-            disabled={isInError}
+            onClick={e => this.submitPhone(e)}
           >
             {phone.id ? 'Mettre à jour' : 'Ajouter' }
           </button>
