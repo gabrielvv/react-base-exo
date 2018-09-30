@@ -5,8 +5,8 @@
  *      . header
  *      . route cible
  *        - route vers Phones
- *        - route vers PhoneForm en création
- *        - route vers PhoneForm en modification
+ *        - route vers PhoneForm en création (sans id) : /managePhone
+ *        - route vers PhoneForm en modification (avec id) : /managePhone/:id
  *        - autre route vers PageNotFound
  *    </main>
  * </Router>

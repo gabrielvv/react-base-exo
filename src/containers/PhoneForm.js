@@ -21,11 +21,13 @@
  *    </form>
  * </section>
  *
+ * 1. Gestion de l'affichage
  * - Utiliser le composant TextInput pour les champs de formulaire
  * - Récupérer le phone avec getPhonebyId au chargement s'il un id est fourni en url, sinon champs vides
  * - Si le phone n'a pas d'id (en création) ne pas afficher #0 dans le FormTitle
  * - Créer une méthode pour chaque onChange de champs
  *
+ * 2. Soumission du formulaire
  * - Gérer les erreurs à la soumission du formulaire
  * - Gestion des erreurs fait appel à la fonction services/isPhoneError.js
  * - Quand le form est validé, le phone est sauvé, rediriger vers la page d'accueil
@@ -56,7 +58,7 @@ class ManagePhonePage extends React.Component {
     this.getPhone()
   }
 
-  // getPhone en cas de changement de route entre update et création via menu
+  // getPhone en cas de changement de route (par id param) entre update et création
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.id === this.props.match.params.id) return
     this.getPhone()
@@ -148,7 +150,6 @@ class ManagePhonePage extends React.Component {
           >
             {phone.id ? 'Mettre à jour' : 'Ajouter' }
           </button>
-
         </form>
       </section>
     )
