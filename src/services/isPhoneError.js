@@ -19,7 +19,7 @@
 export default function getPhoneErrors(phone) {
   const errors = {}
 
-  if (phone.name.length === 0) {
+  if (!phone.name.length) {
     errors.name = ' : ne doit pas être vide'
   }
 
@@ -27,7 +27,7 @@ export default function getPhoneErrors(phone) {
     errors.price = ' : doit être en chiffres'
   }
 
-  if (phone.price.length === 0) {
+  if (!phone.price.length) {
     errors.price = ' : ne doit pas être vide'
   }
 
