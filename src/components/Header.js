@@ -12,31 +12,3 @@
  *
  * Faire un tableau de routes et les mapper
  */
-
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-
-import '../styles/header.css'
-
-const routes = [
-  {
-    url: '/',
-    label: 'Phones'
-  },
-  {
-    url: '/managePhone',
-    label: 'Ajout Phone'
-  }
-]
-
-const Links = routes.map(route => (
-  <NavLink
-    to={route.url} className="HeaderLink" activeClassName="HeaderActive" exact key={route.url}
-  >{route.label}</NavLink>
-))
-
-const Header = () => (
-  <header className="Header">{Links}</header>
-)
-
-export default Header

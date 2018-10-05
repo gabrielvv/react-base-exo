@@ -11,28 +11,13 @@
  *    </main>
  * </Router>
  */
+
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import Phones from './containers/Phones'
-import PhoneForm from './containers/PhoneForm'
-import Header from './components/Header'
-import PageNotFound from './components/PageNotFound'
-
-import './styles/main.css'
-
-const App = () => (
-  <Router>
-    <main className="mainPage">
-      <Header />
-      <Switch>
-        <Route path="/" component={Phones} exact />
-        <Route path="/managePhone" component={PhoneForm} exact />
-        <Route path="/managePhone/:id" component={PhoneForm} />
-        <Route component={PageNotFound} />
-      </Switch>
-    </main>
-  </Router>
-)
+class App extends React.Component {
+  render () {
+    return <div>Hello</div>
+  }
+}
 
 export default App

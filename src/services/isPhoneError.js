@@ -15,24 +15,3 @@
  * }
  * S'il n'y a pas d'erreur ne pas retourner la clé name ou price
  */
-
-export default function getPhoneErrors(phone) {
-  const errors = {}
-
-  if (!phone.name.length) {
-    errors.name = ' : ne doit pas être vide'
-  }
-
-  if (!Number(phone.price)) {
-    errors.price = ' : doit être en chiffres'
-  }
-
-  if (!phone.price.length) {
-    errors.price = ' : ne doit pas être vide'
-  }
-
-  return {
-    isInError: !!Object.keys(errors).length,
-    errors
-  }
-}

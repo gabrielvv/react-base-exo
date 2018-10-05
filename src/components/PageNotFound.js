@@ -3,10 +3,3 @@
  *
  * <div class="Wrapper404">La page que vous cherchez n'existe pas</div>
  */
-
-import React from 'react'
-import '../styles/404.css'
-
-const PageNotFound = () => <div className="Wrapper404">La page que vous cherchez n'existe pas</div>
-
-export default PageNotFound
